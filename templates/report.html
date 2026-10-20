@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}Report Fake Medicine{% endblock %}
+{% block content %}
+
+<section class="page-hero page-hero-red">
+  <div class="container">
+    <h1>📝 Report Suspected Fake Medicine</h1>
+    <p>Help protect others by reporting counterfeit, substandard, or recalled medicines.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="report-layout">
+
+      <!-- Form -->
+      <div class="report-form-wrap">
+        <div class="card">
+          <h2 class="card-title">Submit a Complaint</h2>
+
+          <div id="formAlert" class="form-alert" style="display:none;"></div>
+
+          <form id="complaintForm" onsubmit="submitComplaint(event)">
+
+            <div class="form-section-label">Medicine Information</div>
+
+            <div class="form-group">
+              <label>Batch Number <span class="req">*</span></label>
+              <input type="text" id="f_batch" placeholder="e.g. BATCH-2024-PCM-001 or UNKNOWN"
+                     required autocomplete="off"/>
+            </div>
+            <div class="form-group">
+              <label>Medicine Name <span class="req">*</span></label>
+              <input type="text" id="f_medicine" placeholder="e.g. Paracetamol 500mg Tablets" required/>
+            </div>
+            <div class="form-group">
+              <label>Issue Type <span class="req">*</span></label>
+              <select id="f_issue" required>
+                <option value="">— Select Issue —</option>
+                <option value="fake">Suspected Counterfeit / Fake Medicine</option>
+                <option value="packaging">Damaged or Tampered Packaging</option>
+                <option value="quality">Poor Quality / Unusual Appearance</option>
+                <option value="side_effect">Adverse / Side Effect</option>
+                <option value="wrong_label">Wrong Label / Mislabelling</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Description <span class="req">*</span></label>
+              <textarea id="f_desc" rows="4"
+                placeholder="Describe the issue in detail — what you noticed, when and where you bought it, etc."
+                required></textarea>
+            </div>
+
+            <div class="form-section-label">Your Information</div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Your Name <span class="req">*</span></label>
+                <input type="text" id="f_name" placeholder="Full Name" required/>
+              </div>
+              <div class="form-group">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" id="f_email" placeholder="you@example.com" required/>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" id="f_phone" placeholder="Mobile Number"/>
+              </div>
+              <div class="form-group">
+                <label>Location <span class="req">*</span></label>
+                <input type="text" id="f_location" placeholder="City, State" required/>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+              📤 Submit Complaint
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Info sidebar -->
+      <div class="report-sidebar">
+        <div class="card sidebar-card">
+          <h3>🛡 Why Report?</h3>
+          <ul class="info-list">
+            <li>Protect other consumers from harm</li>
+            <li>Help authorities track counterfeit networks</li>
+            <li>Improve medicine quality standards</li>
+            <li>Your report triggers an investigation</li>
+          </ul>
+        </div>
+        <div class="card sidebar-card">
+          <h3>📞 Emergency Contacts</h3>
+          <div class="contact-item"><strong>CDSCO Helpline</strong><span>1800-180-3024</span></div>
+          <div class="contact-item"><strong>Drug Controller</strong><span>011-23236975</span></div>
+          <div class="contact-item"><strong>Email</strong><span>cdsco@nic.in</span></div>
+        </div>
+        <div class="card sidebar-card">
+          <h3>📌 What happens next?</h3>
+          <ol class="info-ol">
+            <li>Your complaint is logged and assigned an ID</li>
+            <li>Admin reviews within 24–48 hours</li>
+            <li>Status updates are sent to your email</li>
+            <li>Action taken against the manufacturer if verified</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+{% endblock %}

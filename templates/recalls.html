@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Recall Notifications{% endblock %}
+{% block content %}
+
+<section class="page-hero page-hero-orange">
+  <div class="container">
+    <h1>🔔 Medicine Recall Notifications</h1>
+    <p>Official recall alerts issued by regulatory authorities. Check if your medicine is affected.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    {% if recalls %}
+    <div class="recall-list">
+      {% for r in recalls %}
+      <div class="recall-card severity-{{ r['severity'] }}">
+        <div class="recall-header">
+          <div>
+            <span class="severity-badge severity-{{ r['severity'] }}">
+              {% if r['severity'] == 'high' %}🔴 HIGH SEVERITY
+              {% elif r['severity'] == 'medium' %}🟡 MEDIUM SEVERITY
+              {% else %}🟢 LOW SEVERITY{% endif %}
+            </span>
+            <h3>{{ r['medicine_name'] or r['batch_no'] }}</h3>
+            <p class="recall-manufacturer">{{ r['manufacturer'] or '—' }}</p>
+          </div>
+          <div class="recall-meta">
+            <div class="meta-item"><span>📦 Batch</span><strong>{{ r['batch_no'] }}</strong></div>
+            <div class="meta-item"><span>📅 Issued</span><strong>{{ r['issued_on'] }}</strong></div>
+          </div>
+        </div>
+        <div class="recall-body">
+          <p class="recall-reason"><strong>Reason:</strong> {{ r['reason'] }}</p>
+          <p class="recall-by"><strong>Issued by:</strong> {{ r['issued_by'] }}</p>
+        </div>
+        <div class="recall-footer">
+          <span class="recall-action">⚠️ If you have this medicine, stop using it and return it to the pharmacy immediately.</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">✅</div>
+      <h3>No Active Recalls</h3>
+      <p>There are currently no medicine recalls in the system.</p>
+    </div>
+    {% endif %}
+
+    <div class="recall-info-box">
+      <h3>📌 What to do if your medicine is recalled?</h3>
+      <ol>
+        <li>Stop using the medicine immediately.</li>
+        <li>Return it to the pharmacy or point of purchase.</li>
+        <li>Contact your doctor for an alternative.</li>
+        <li><a href="/report">File a complaint</a> if you experienced any adverse effects.</li>
+        <li>Report to your local drug regulatory authority.</li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

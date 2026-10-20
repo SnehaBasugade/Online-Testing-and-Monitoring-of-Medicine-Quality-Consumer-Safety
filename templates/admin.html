@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+
+<section class="page-hero page-hero-dark">
+  <div class="container">
+    <h1>🛡 Admin Dashboard</h1>
+    <p>Manage complaints, issue recalls, and monitor medicine database.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Admin Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="complaints-tab">📝 Complaints</button>
+      <button class="tab-btn" data-tab="recalls-tab">🔔 Recalls</button>
+      <button class="tab-btn" data-tab="medicines-tab">💊 Medicines</button>
+      <button class="tab-btn" data-tab="add-medicine-tab">➕ Add Medicine</button>
+    </div>
+
+    <!-- Complaints Tab -->
+    <div class="tab-content active" id="tab-complaints-tab">
+      <div class="card">
+        <div class="card-header-row">
+          <h3>Consumer Complaints</h3>
+          <button class="btn btn-sm btn-outline" onclick="loadComplaints()">🔄 Refresh</button>
+        </div>
+        <div class="filter-row">
+          <select id="statusFilter" onchange="loadComplaints()">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="under_review">Under Review</option>
+            <option value="resolved">Resolved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <div id="complaintsTable" class="table-wrap">
+          <p class="loading-text">Loading complaints…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recalls Tab -->
+    <div class="tab-content" id="tab-recalls-tab">
+      <div class="card">
+        <div class="card-header-row">
+          <h3>Active Recalls</h3>
+        </div>
+        <div id="recallsTable" class="table-wrap">
+          <p class="loading-text">Loading recalls…</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1.5rem;">
+        <h3 style="margin-bottom:1rem;">🔔 Issue New Recall</h3>
+        <div id="recallAlert" class="form-alert" style="display:none;"></div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Batch Number</label>
+            <input type="text" id="r_batch" placeholder="e.g. BATCH-2025-AMX-112"/>
+          </div>
+          <div class="form-group">
+            <label>Severity</label>
+            <select id="r_severity">
+              <option value="high">🔴 High</option>
+              <option value="medium" selected>🟡 Medium</option>
+              <option value="low">🟢 Low</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Reason</label>
+          <textarea id="r_reason" rows="3" placeholder="Describe the reason for recall…"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Issued By</label>
+          <input type="text" id="r_issuedby" value="CDSCO — Central Drugs Standard Control Organisation"/>
+        </div>
+        <button class="btn btn-primary" onclick="issueRecall()">🔔 Issue Recall</button>
+      </div>
+    </div>
+
+    <!-- Medicines Tab -->
+    <div class="tab-content" id="tab-medicines-tab">
+      <div class="card">
+        <div class="card-header-row">
+          <h3>Medicine Database</h3>
+          <button class="btn btn-sm btn-outline" onclick="loadMedicines()">🔄 Refresh</button>
+        </div>
+        <div id="medicinesTable" class="table-wrap">
+          <p class="loading-text">Loading medicines…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Medicine Tab -->
+    <div class="tab-content" id="tab-add-medicine-tab">
+      <div class="card" style="max-width:680px;">
+        <h3 style="margin-bottom:1rem;">➕ Add New Medicine</h3>
+        <div id="addMedAlert" class="form-alert" style="display:none;"></div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Batch Number <span class="req">*</span></label>
+            <input type="text" id="m_batch" placeholder="BATCH-YYYY-XXX-000"/>
+          </div>
+          <div class="form-group">
+            <label>Medicine Name <span class="req">*</span></label>
+            <input type="text" id="m_name" placeholder="e.g. Aspirin 100mg Tablets"/>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Generic Name</label>
+            <input type="text" id="m_generic" placeholder="e.g. Aspirin"/>
+          </div>
+          <div class="form-group">
+            <label>Manufacturer <span class="req">*</span></label>
+            <input type="text" id="m_mfr" placeholder="Company name"/>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Category</label>
+            <input type="text" id="m_cat" placeholder="e.g. Antibiotic"/>
+          </div>
+          <div class="form-group">
+            <label>Dosage</label>
+            <input type="text" id="m_dose" placeholder="e.g. 100mg once daily"/>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Manufacturing Date <span class="req">*</span></label>
+            <input type="date" id="m_mfg"/>
+          </div>
+          <div class="form-group">
+            <label>Expiry Date <span class="req">*</span></label>
+            <input type="date" id="m_exp"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Storage Instructions</label>
+          <input type="text" id="m_storage" placeholder="e.g. Store below 25°C in a dry place"/>
+        </div>
+        <button class="btn btn-primary" onclick="addMedicine()">💾 Add Medicine</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

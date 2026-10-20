@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}MediVerify{% endblock %} – Medicine Quality Monitoring</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon">💊</span>
+      <span class="logo-text">Medi<strong>Verify</strong></span>
+    </a>
+    <nav class="nav">
+      <a href="/"          class="nav-link {% if request.path=='/' %}active{% endif %}">🔍 Verify</a>
+      <a href="/recalls"   class="nav-link {% if '/recalls' in request.path %}active{% endif %}">🔔 Recalls</a>
+      <a href="/report"    class="nav-link {% if '/report' in request.path %}active{% endif %}">📝 Report</a>
+      <a href="/analytics" class="nav-link {% if '/analytics' in request.path %}active{% endif %}">📊 Analytics</a>
+      <a href="/admin"     class="nav-link nav-admin {% if '/admin' in request.path %}active{% endif %}">🛡 Admin</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+  </div>
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>💊 <strong>MediVerify</strong> — Online Testing &amp; Monitoring of Medicine Quality and Consumer Safety</p>
+    <p class="footer-copy">Major Project © 2026 | Department of Computer Science</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    document.querySelector('.nav').classList.toggle('open');
+  });
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

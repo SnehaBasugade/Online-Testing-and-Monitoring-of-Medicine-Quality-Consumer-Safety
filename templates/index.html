@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Verify Medicine{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-badge">🎓 Major Project — Medicine Quality &amp; Consumer Safety</span>
+    <h1 class="hero-title">Verify Your Medicine<br/><span class="highlight">Instantly &amp; Safely</span></h1>
+    <p class="hero-subtitle">
+      Scan the QR code or enter the batch number on your medicine pack to verify
+      authenticity, check dates, and detect counterfeit or recalled medicines.
+    </p>
+    <div class="hero-actions">
+      <a href="#verify-section" class="btn btn-primary">🔍 Verify Now</a>
+      <a href="/report" class="btn btn-outline-white">📝 Report Fake</a>
+    </div>
+  </div>
+  <div class="hero-features">
+    <div class="feat-pill">✅ QR &amp; Batch Verification</div>
+    <div class="feat-pill">🚨 Fake Medicine Detection</div>
+    <div class="feat-pill">🔔 Recall Notifications</div>
+    <div class="feat-pill">📝 Complaint System</div>
+    <div class="feat-pill">📊 Analytics Dashboard</div>
+  </div>
+</section>
+
+<!-- VERIFY SECTION -->
+<section class="section" id="verify-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Medicine Authenticity Checker</h2>
+      <p>Enter a batch number or scan a QR code from the medicine packaging</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="batch">🔢 Batch Number</button>
+      <button class="tab-btn" data-tab="qr">📷 Scan QR Code</button>
+      <button class="tab-btn" data-tab="demo">🧪 Demo QR Codes</button>
+    </div>
+
+    <!-- Batch Tab -->
+    <div class="tab-content active" id="tab-batch">
+      <div class="verify-form card">
+        <label for="batchInput">Enter Batch Number</label>
+        <div class="input-row">
+          <input type="text" id="batchInput" placeholder="e.g. BATCH-2024-PCM-001"
+                 autocomplete="off" spellcheck="false"/>
+          <button class="btn btn-primary" id="verifyBtn" onclick="verifyMedicine()">🔍 Verify</button>
+        </div>
+        <div class="sample-tags">
+          <span class="label-sm">Try sample →</span>
+          <span class="chip" onclick="quickVerify('BATCH-2024-PCM-001')">✅ Genuine</span>
+          <span class="chip" onclick="quickVerify('BATCH-2023-MET-045')">❌ Expired</span>
+          <span class="chip" onclick="quickVerify('BATCH-2025-OMP-091')">⚠️ Expiring</span>
+          <span class="chip" onclick="quickVerify('BATCH-2024-AZI-055')">🔔 Recalled</span>
+          <span class="chip chip-red" onclick="quickVerify('FAKE-9999-XYZ-000')">🚨 Fake</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Scanner Tab -->
+    <div class="tab-content" id="tab-qr">
+      <div class="card text-center">
+        <p class="text-muted mb-1">Point your camera at the QR code on the medicine packaging.</p>
+        <div id="qr-reader" style="max-width:420px;margin:0 auto 1rem;"></div>
+        <div class="qr-btn-row">
+          <button class="btn btn-primary" id="startScanBtn" onclick="startQRScan()">📷 Start Camera</button>
+          <button class="btn btn-outline" id="stopScanBtn" onclick="stopQRScan()" style="display:none;">⏹ Stop</button>
+        </div>
+        <div id="qr-scanned-value" class="scanned-chip" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- Demo QR Tab -->
+    <div class="tab-content" id="tab-demo">
+      <p class="text-center text-muted mb-2">Click any QR code card to simulate scanning and verify.</p>
+      <div class="demo-grid" id="demoGrid"></div>
+    </div>
+
+    <!-- Result -->
+    <div id="resultWrapper" style="display:none;margin-top:2rem;">
+      <div id="resultCard" class="result-card"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>How It Works</h2>
+      <p>Verify medicine authenticity in three simple steps</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">📦</div>
+        <h3>Find the Code</h3>
+        <p>Locate the QR code or batch number on the medicine packaging — usually on the back label or box.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">🔍</div>
+        <h3>Scan or Enter</h3>
+        <p>Use your camera to scan the QR code, or manually type the batch number in the input field above.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">📋</div>
+        <h3>Get Results</h3>
+        <p>Instantly see authenticity status, dates, manufacturer info, recall alerts, and safety advice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/verify.js') }}"></script>
+{% endblock %}

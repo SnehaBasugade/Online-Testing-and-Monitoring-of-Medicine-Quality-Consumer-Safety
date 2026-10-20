@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Analytics Dashboard{% endblock %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+{% block content %}
+
+<section class="page-hero page-hero-blue">
+  <div class="container">
+    <h1>📊 Analytics Dashboard</h1>
+    <p>Complaint trends, verification statistics, and medicine safety insights.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card"><div class="kpi-icon">🔍</div><div class="kpi-val" id="kpi-verif">—</div><div class="kpi-label">Total Verifications</div></div>
+      <div class="kpi-card"><div class="kpi-icon">✅</div><div class="kpi-val" id="kpi-genuine">—</div><div class="kpi-label">Genuine Medicines</div></div>
+      <div class="kpi-card kpi-red"><div class="kpi-icon">🚨</div><div class="kpi-val" id="kpi-fake">—</div><div class="kpi-label">Fake Detected</div></div>
+      <div class="kpi-card kpi-yellow"><div class="kpi-icon">📝</div><div class="kpi-val" id="kpi-complaints">—</div><div class="kpi-label">Total Complaints</div></div>
+      <div class="kpi-card kpi-orange"><div class="kpi-icon">⏳</div><div class="kpi-val" id="kpi-pending">—</div><div class="kpi-label">Pending Complaints</div></div>
+      <div class="kpi-card kpi-red"><div class="kpi-icon">🔔</div><div class="kpi-val" id="kpi-recalls">—</div><div class="kpi-label">Active Recalls</div></div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="charts-grid-2">
+      <div class="card chart-card">
+        <h3>Verification Results Breakdown</h3>
+        <canvas id="chartVerif"></canvas>
+      </div>
+      <div class="card chart-card">
+        <h3>Monthly Verification Trend</h3>
+        <canvas id="chartMonthly"></canvas>
+      </div>
+    </div>
+
+    <!-- Charts Row 2 -->
+    <div class="charts-grid-2">
+      <div class="card chart-card">
+        <h3>Complaint Types Distribution</h3>
+        <canvas id="chartComplaintType"></canvas>
+      </div>
+      <div class="card chart-card">
+        <h3>Complaint Status Overview</h3>
+        <canvas id="chartComplaintStatus"></canvas>
+      </div>
+    </div>
+
+    <!-- Top Complained + Recent Scans -->
+    <div class="charts-grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">🏆 Top Complained Medicines</h3>
+        <div id="topComplaints"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">🕒 Recent Verifications</h3>
+        <div id="recentVerif"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+{% endblock %}
