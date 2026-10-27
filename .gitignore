@@ -1,7 +1,9 @@
 __pycache__/
 *.pyc
-.vscode/
-venv/
-.venv/
-.env
+*.pyo
 mediverify.db
+*.db
+.env
+deploy.zip
+.vscode/
+routes/__pycache__/

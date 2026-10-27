@@ -9,6 +9,9 @@ from routes.admin    import admin_bp
 app = Flask(__name__)
 app.secret_key = 'mediverify-secret-2026'
 
+# Run init_db on startup (works with both flask run and gunicorn)
+init_db()
+
 # Register blueprints
 app.register_blueprint(verify_bp)
 app.register_blueprint(recall_bp)
@@ -22,4 +25,6 @@ def index():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)

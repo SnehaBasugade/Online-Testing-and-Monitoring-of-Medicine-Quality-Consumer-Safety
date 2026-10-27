@@ -1,7 +1,9 @@
 ﻿import sqlite3, os
 from datetime import datetime
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'mediverify.db')
+# Use persistent disk on Render (/data), fallback to local for development
+DATA_DIR = '/data' if os.path.exists('/data') else os.path.dirname(__file__)
+DB_PATH = os.path.join(DATA_DIR, 'mediverify.db')
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)
